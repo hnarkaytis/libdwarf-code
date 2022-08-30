@@ -24,4 +24,3 @@ jobs:
               sh ./autogen.sh
               ./configure
               make check
-              cat test/test_dwarfdumpPE.sh.log test/test_dwarfdumpMacos.sh.log
