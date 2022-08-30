@@ -10,7 +10,7 @@ on:
 jobs:
   build:
       runs-on: macos-12
-      name: FreeBSD with gcc
+      name: FreeBSD with clang
       steps:
         - uses: actions/checkout@v2
         - name: FreeBSD VM
@@ -21,6 +21,8 @@ jobs:
             copyback: false
             prepare: pkg install -y autoconf automake libtool pkgconf
             run: |
+              chown -R $(id -u):$(id -g) .
               ./autogen.sh
               ./configure
               make check
+              cat test/test_dwarfdumpPE.sh.log test/test_dwarfdumpMacos.sh.log
