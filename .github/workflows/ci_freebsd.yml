@@ -1,0 +1,26 @@
+name: freebsd_autotools CI
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+      runs-on: macos-12
+      name: FreeBSD with gcc
+      steps:
+        - uses: actions/checkout@v2
+        - name: FreeBSD VM
+          uses: vmactions/freebsd-vm@v0
+          with:
+            usesh: true
+            sync: rsync
+            copyback: false
+            prepare: pkg install -y autoconf automake libtool pkgconf
+            run: |
+              ./autogen.sh
+              ./configure
+              make check
